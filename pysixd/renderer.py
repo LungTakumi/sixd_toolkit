@@ -101,6 +101,23 @@ void main() {
 }
 """
 
+# Color fragment shader - Mask shading
+#-------------------------------------------------------------------------------
+_color_fragment_mask_code = """
+uniform float u_light_ambient_w;
+uniform sampler2D u_texture;
+uniform int u_use_texture;
+
+varying vec3 v_color;
+varying vec2 v_texcoord;
+varying vec3 v_eye_pos;
+varying vec3 v_L;
+varying vec3 v_normal;
+void main() {
+    gl_FragColor = vec4(1, 1, 1, 1.0);
+}
+"""
+
 # Depth vertex shader
 # Ref: https://github.com/julienr/vertex_visibility/blob/master/depth.py
 #-------------------------------------------------------------------------------
@@ -206,8 +223,10 @@ def draw_color(shape, vertex_buffer, index_buffer, texture, mat_model, mat_view,
     # Set shader for the selected shading
     if shading == 'flat':
         color_fragment_code = _color_fragment_flat_code
-    else: # 'phong'
+    elif shading == 'phong': # 'phong'
         color_fragment_code = _color_fragment_phong_code
+    elif shading == 'mask':
+        color_fragment_code = _color_fragment_mask_code
 
     program = gloo.Program(_color_vertex_code, color_fragment_code)
     program.bind(vertex_buffer)
@@ -336,21 +355,21 @@ def render(model, im_size, K, R, t, clip_near=100, clip_far=2000,
     if mode == 'depth':
         vertices_type = [('a_position', np.float32, 3),
                          ('a_color', np.float32, colors.shape[1])]
-        vertices = np.array(zip(model['pts'], colors), vertices_type)
+        vertices = np.array(list(zip(model['pts'], colors)), vertices_type)
     else:
         if shading == 'flat':
             vertices_type = [('a_position', np.float32, 3),
                              ('a_color', np.float32, colors.shape[1]),
                              ('a_texcoord', np.float32, 2)]
-            vertices = np.array(zip(model['pts'], colors, texture_uv),
+            vertices = np.array(list(zip(model['pts'], colors, texture_uv)),
                                 vertices_type)
         else: # shading == 'phong'
             vertices_type = [('a_position', np.float32, 3),
                              ('a_normal', np.float32, 3),
                              ('a_color', np.float32, colors.shape[1]),
                              ('a_texcoord', np.float32, 2)]
-            vertices = np.array(zip(model['pts'], model['normals'],
-                                    colors, texture_uv), vertices_type)
+            vertices = np.array(list(zip(model['pts'], model['normals'],
+                                    colors, texture_uv)), vertices_type)
 
     # Rendering
     #---------------------------------------------------------------------------

@@ -5,8 +5,7 @@
 
 import math
 import numpy as np
-import transform
-import inout
+from pysixd import transform, inout
 
 def fibonacci_sampling(n_pts, radius=1):
     '''

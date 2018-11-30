@@ -13,12 +13,28 @@ def get_dataset_params(name, model_type='', train_type='', test_type='',
          'train_type': train_type, 'test_type': test_type, 'cam_type': cam_type}
 
     # Path to the folder with datasets
-    common_base_path = '/path/to/datasets/'
+    common_base_path = 'H:\VisualStudioProject\sixd_toolkit\datasets'
 
     # Path to the T-LESS Toolkit (https://github.com/thodan/t-less_toolkit)
     tless_tk_path = '/path/to/t-less_toolkit/'
 
-    if name == 'hinterstoisser':
+    if name == 'jefftest':
+        p['obj_count'] = 1
+        p['scene_count'] = 1
+        p['train_im_size'] = (640, 480)
+        p['test_im_size'] = (640, 480)
+        p['base_path'] = pjoin(common_base_path, 'jefftest')
+        p['im_id_pad'] = 4
+        p['model_texture_mpath'] = pjoin(p['base_path'], 'models', 'obj_{:02d}.png')
+        p['cam_params_path'] = pjoin(p['base_path'], 'camera.yml')
+
+        # p['test_obj_depth_range'] = (600.90, 1102.35) # [mm] - with original GT
+        p['test_obj_depth_range'] = (346.31, 1499.84) # [mm] - with extended GT
+        # (there are only 3 occurrences under 400 mm)
+
+        p['test_obj_azimuth_range'] = (0, 2 * math.pi)
+        p['test_obj_elev_range'] = (0, 0.5 * math.pi)
+    elif name == 'hinterstoisser':
         p['obj_count'] = 15
         p['scene_count'] = 15
         p['train_im_size'] = (640, 480)
