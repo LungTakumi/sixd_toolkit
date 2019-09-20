@@ -241,23 +241,23 @@ for obj_id in obj_ids:
             rangeX = max_x - min_x
             rangeY = max_y - min_y
 
-            if isVisualize:
-                plt.xlim((0, par['cam']['im_size'][0]))
-                plt.ylim((0, par['cam']['im_size'][1]))
-                plt.imshow(rgb)
+            #if isVisualize:
+            #    plt.xlim((0, par['cam']['im_size'][0]))
+            #    plt.ylim((0, par['cam']['im_size'][1]))
+            #    plt.imshow(rgb)
 
-                plt.plot(proj_2D[0][0], proj_2D[0][1], 'co')
+            #    plt.plot(proj_2D[0][0], proj_2D[0][1], 'co')
 
-                for edge in edges_corners:
-                    plt.plot(proj_2D[edge, 0], proj_2D[edge, 1], color='g', linewidth=1)
+            #    for edge in edges_corners:
+            #        plt.plot(proj_2D[edge, 0], proj_2D[edge, 1], color='g', linewidth=1)
 
-                plt.plot([min_x, max_x], [min_y, min_y], color='b', linewidth=1)
-                plt.plot([max_x, max_x], [min_y, max_y], color='b', linewidth=1)
-                plt.plot([max_x, min_x], [max_y, max_y], color='b', linewidth=1)
-                plt.plot([min_x, min_x], [max_y, min_y], color='b', linewidth=1)
+            #    plt.plot([min_x, max_x], [min_y, min_y], color='b', linewidth=1)
+            #    plt.plot([max_x, max_x], [min_y, max_y], color='b', linewidth=1)
+            #    plt.plot([max_x, min_x], [max_y, max_y], color='b', linewidth=1)
+            #    plt.plot([min_x, min_x], [max_y, min_y], color='b', linewidth=1)
 
-                plt.gca().invert_yaxis()
-                plt.show()
+            #    plt.gca().invert_yaxis()
+            #    plt.show()
 
             label = []
             label.append(obj_id)
